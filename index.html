@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            animation: gradientAnimation 10s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background: linear-gradient(135deg, #6a11cb, #2575fc);
+            }
+            50% {
+                background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            }
+            100% {
+                background: linear-gradient(135deg, #6a11cb, #2575fc);
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            transition: 0.4s;
+        }
+
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #f0f0f0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            box-shadow: 0 0 10px #4caf50;
+        }
+
+        .result-box {
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .result-box:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .result-box span {
+            font-weight: bold;
+            color: #4caf50;
+            font-size: 22px;
+        }
+
+        .emoji {
+            font-size: 28px;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #ccc;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 35px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            .result-box span {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                width: 100%;
+            }
+            h1 {
+                font-size: 28px;
+            }
+            .result-box span {
+                font-size: 18px;
+            }
+            input {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 24px;
+            }
+            .result-box span {
+                font-size: 16px;
+            }
+            input {
+                font-size: 13px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎂 Age Calculator</h1>
+    <label for="dob">Select your date of birth:</label>
+    <input type="date" id="dob">
+    <div id="result" class="result-box">Your age will appear here!</div>
+    <footer>Made with ❤️ by <a href="#">You</a></footer>
+</div>
+
+<script>
+    const dobInput = document.getElementById("dob");
+    const result = document.getElementById("result");
+
+    dobInput.addEventListener("input", () => {
+        const dob = new Date(dobInput.value);
+
+        if (!dobInput.value) {
+            result.innerHTML = `<span>🛑 Please select a valid date!</span>`;
+            return;
+        }
+
+        const today = new Date();
+
+        // Calculate years, months, and days
+        let years = today.getFullYear() - dob.getFullYear();
+        let months = today.getMonth() - dob.getMonth();
+        let days = today.getDate() - dob.getDate();
+
+        if (days < 0) {
+            months--;
+            days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        result.innerHTML = `
+            <span class="emoji">🎉</span> 
+            You are <span>${years}</span> years, 
+            <span>${months}</span> months, and 
+            <span>${days}</span> days old.
+        `;
+    });
+</script>
+
+</body>
+</html>
